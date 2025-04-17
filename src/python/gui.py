@@ -4,6 +4,7 @@
 import fixed_ports as fp
 import power as pw
 import pwm_ports as pp
+import animation as ani
 
 # =====================================
 # IMPORTAR LIBRERÍAS NECESARIAS
@@ -14,6 +15,7 @@ from PIL import ImageTk, Image
 import os 
 import sys
 from tkinter import messagebox
+import threading
 
 #===========================
 # CREAR PANTALLA TKINTER
@@ -69,13 +71,17 @@ fondo = ImageTk.PhotoImage(imagen_redimensionada)  # Convertimos para Tkinter
 label_fondo = tk.Label(pantalla, image=fondo)
 label_fondo.place(x=0, y=0, relwidth=1, relheight=1)  # Ajusta la imagen a la ventana
 
-
-
+# =========================
+# CARGAR Y ANIMAR GIF
+# =========================
+label_animacion = tk.Label(pantalla)
+label_animacion.place(relwidth=1, relheight=1)  # El Label ocupa todo el espacio de la ventana
+ruta_del_gif = os.path.join(BASE_DIR, "resources", "videos", "giphy.gif") # Añadir ruta de la carpeta de recurso mediante os.path.join
+ani.cargar_y_animar_gif(label_animacion, ruta_del_gif, intervalo=100) # Ajusta el intervalo si es necesario
 
 # ====================================================
 # CREAR BOTONES ON-OFF PARA PINES DIGITALES FIJOS
 # ====================================================
-
 # Crear un Frame negro en la parte superior
 header_frame1 = tk.Frame(pantalla, bg="black", width=175, height=270)
 header_frame1.place(x=30, y=30)
@@ -217,11 +223,11 @@ def setup_labels():
 setup_labels()            # Llamar a la función para inicializar las etiquetas al inicio
 
 
-# ===========================================================
-# Crear un diccionario global para el estado de los pines Aagados = False
-# ===========================================================
-
-# pines fijos (A0-A3) y pines PWM (A4-A5) como apagados
+# =====================================================================
+#  CREAR DICCIONARIO PARA ALMACENAR EL ESTADO DE LOS PINES APAGADOS
+# ====================================================================
+# Inicializar el estado de los pines como apagado (False)
+# Se inicializan los pines fijos (A0-A3) y los pines PWM (A4-A5) como apagados
 pin_states = {}
 for pin in fp.fixedAnalogPins:
     pin_states[pin] = False
@@ -255,6 +261,13 @@ def verificar_conexion():
             # Si no se lanza ninguna excepción, la conexión es exitosa
             conexion_label.config(text="Connection established", fg="green")
             conexion_activa = True
+             # (MOSFET) Apagar leds establecer la conexión ****
+            print("Conexión establecida. Apagando LEDs...")
+            for pin in fp.fixedDigitalPins:
+                pw.board.digital_write(pin, 0)  # Asegurar apagado de pines digitales fijos
+            for pin in pp.pwmDigitalPins:
+                pw.board.digital_write(pin, 0)   # Asegurar apagado de pines PWM
+            # Fin de la adición MOSFET ****
         estado_conexion_actual = True
     except Exception:  # Capturar la excepción genérica
         if conexion_activa:
@@ -276,11 +289,6 @@ def verificar_conexion():
 
 # Llamar a la función al inicio
 verificar_conexion()
-
-
-    
-
-
 
 # Lectturas fixed (V-I-P) de los pines analógicos
 def actualizar_lecturas():
@@ -357,6 +365,90 @@ def verificacion_periodica():
     pantalla.after(5000, verificacion_periodica)  # Verifica cada 5 segundos
 
 verificacion_periodica()  # Inicia la verificación periódica
+
+# ===========================================================
+# CREAR UN INPUT PARA INTRODUCIR LA TEMPERATURA Y HUMEDAD 
+# ===========================================================
+#
+# Crear un Frame negro en la parte superior
+label_input = tk.Frame(pantalla, bg="black", width=350, height=180)
+label_input.place(x=440, y=30)
+
+# Agregar el título dentro del Frame
+titulo_TemHum = tk.Label(
+    label_input, 
+    text="Introduzir a temperatura e a humidade", 
+    font=("Arial", 10, "bold", "underline"),  # Fuente negrita y subrayada
+    bg="black", 
+    fg="white"
+)
+titulo_TemHum.place(x=50, y=10)
+
+# Campos de entrada para temperatura y humedad
+etiqueta_temperatura = tk.Label(label_input, text="Temperatura (°C):", bg="black", fg="white")
+etiqueta_temperatura.place(x=20, y=50)
+entrada_temperatura = tk.Entry(label_input)
+entrada_temperatura.place(x=150, y=50)
+
+etiqueta_humedad = tk.Label(label_input, text="Humidade (%):", bg="black", fg="white")
+etiqueta_humedad.place(x=20, y=90)
+entrada_humedad = tk.Entry(label_input)
+entrada_humedad.place(x=150, y=90)
+
+lock = threading.Lock()
+
+# Función para obtener los valores ingresados
+def obtener_valores():
+    try:
+        temperatura = float(entrada_temperatura.get())
+        humedad = float(entrada_humedad.get())
+        assert 0 <= temperatura <= 55, "La temperatura debe estar entre 0 y 55 °C"
+        assert 0 <= humedad <= 100, "La humedad debe ser entre 0 y 100 %"
+
+        with pw.lock:
+            if not (15 <= temperatura <= 30 and 40 <= humedad <= 50):
+                pw.parpadeando_temperatura = (temperatura < 15 or temperatura > 30)
+                pw.parpadeando_humedad = (humedad > 50)
+                print(f"Parpadeo activado: Temp={pw.parpadeando_temperatura}, Hum={pw.parpadeando_humedad}")
+            else:
+                pw.parpadeando_temperatura = False
+                pw.parpadeando_humedad = False
+                pw.board.analog_write(pp.pwmDigitalPins[0], 0)
+                pw.board.analog_write(pp.pwmDigitalPins[1], 0)
+                boton_d3.config(bg="gray")
+                boton_d5.config(bg="gray")
+                print(f"Temperatura ingresada: {temperatura} °C, Humedad ingresada: {humedad} %")
+    except AssertionError as e:
+        messagebox.showerror("Error", str(e))
+        pass
+
+# Botón para obtener los valores
+boton_obtener = tk.Button(label_input, text="Obtener Valores", command=obtener_valores)
+boton_obtener.place(x=150, y=130)
+
+# Iniciar los hilos de parpadeo al inicio
+threading.Thread(target=pp.parpadear_led_temperatura, args=(pp.pwmDigitalPins[0], boton_d3, "red"), daemon=True).start()
+threading.Thread(target=pp.parpadear_led_humedad, args=(pp.pwmDigitalPins[1], boton_d5, "blue"), daemon=True).start()
+
+
+# =======================================================
+# DESCONECTAR EL BOARD AL CERRAR LA VENTANA
+# =======================================================
+def cerrar_ventana():
+    try:
+        # Apagar pines 
+        for pin in fp.fixedDigitalPins:
+            pw.board.digital_write(pin, 0)  # Apagar pines digitales fijos
+        for pin in pp.pwmDigitalPins:
+            pw.board.analog_write(pin, 0)  # Apagar pines PWM
+
+        pw.board.shutdown()  # Enviar mensaje de "stop streaming"
+    except Exception:
+        messagebox.showerror(f"Error al cerrar la conexión:")
+    finally:
+        pantalla.destroy()  # Cerrar la ventana de la GUI   
+
+pantalla.protocol("WM_DELETE_WINDOW", cerrar_ventana)  # Llamar a la función al cerrar la ventana (debe colocarse antes "pantalla.mainloop()" para que funcione correctamente)")
 
 
 # ====================

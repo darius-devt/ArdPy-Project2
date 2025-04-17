@@ -1,6 +1,7 @@
 # ======================
 # IMPORTAR FICHEROS
 # ======================
+import threading
 import fixed_ports as fp
 import pwm_ports as pp
 from arduino_board import board
@@ -95,3 +96,11 @@ def initialize_pwm_analog_pins(board):
     """Configurar los pines analógicos PWM A4 y A5 con el callback para lectura."""
     for pin in pp.pwmAnalogPins:  # Itera sobre los pines PWM definidos (A4, A5)
         board.set_pin_mode_analog_input(pin, callback=pwm_analog_callback)
+
+
+# ===============================================
+# Función para iniciar el parpadeo de los LEDs
+# ===============================================
+parpadeando_temperatura = False  # Variable global para controlar el parpadeo de los LEDs
+parpadeando_humedad = False
+lock = threading.Lock()
