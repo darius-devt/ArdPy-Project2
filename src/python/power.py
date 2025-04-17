@@ -1,7 +1,6 @@
 # ======================
 # IMPORTAR FICHEROS
 # ======================
-from telemetrix import telemetrix
 import fixed_ports as fp
 import pwm_ports as pp
 from arduino_board import board
@@ -96,16 +95,3 @@ def initialize_pwm_analog_pins(board):
     """Configurar los pines analógicos PWM A4 y A5 con el callback para lectura."""
     for pin in pp.pwmAnalogPins:  # Itera sobre los pines PWM definidos (A4, A5)
         board.set_pin_mode_analog_input(pin, callback=pwm_analog_callback)
-
-# ===================================
-# CONTROLAR PWM_PORTS (V,I,P)
-# ===================================
-
-# Almacenar el ciclo de trabajo actual de cada pin PWM
-ciclos_trabajo = {pin: 0 for pin in pp.pwmAnalogPins}
-
-def regular_slider(pin, value):
-    """Actualizar el ciclo de trabajo en función del slider."""
-    value = int(value)                      # Convertir a entero por si llega como string
-    board.analog_write(pin, value)
-    ciclos_trabajo[pin] = value
