@@ -27,11 +27,11 @@ def on_off_button(pin, button):
         states[pin] = False       # Si el pin no está en states, lo inicializamos en False
 
     if states[pin]:
-        button.config(bg="gray")  # Cambiar color del botón a apagado
+        button.config(bg="steel blue")  # Cambiar color del botón a apagado
         states[pin] = False
         pinOnOFF(board, pin, 0)
     else:
-        button.config(bg="blue")  # Cambiar color del botón al color azul
+        button.config(bg="green")  # Cambiar color del botón al color azul
         states[pin] = True
         pinOnOFF(board, pin, 1)
 

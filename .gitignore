@@ -1,6 +1,6 @@
 # Ignorar build y dist de PyInstaller
-src/python/build/
-src/python/dist/
+build/
+dist/
 
 # Ignorar archivos del proyecto
 data/

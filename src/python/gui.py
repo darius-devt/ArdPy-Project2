@@ -37,7 +37,7 @@ position_top = int((screen_height - window_height) / 2)
 # Geometría de la ventana
 pantalla.geometry(f'{window_width}x{window_height}+{position_left}+{position_top}')
 pantalla.title("Arduino Board Control")
-pantalla.config(background="white")
+pantalla.config(background="black")
 
 # ===============================
 # CARGAR ICONO DE LA APLICACIÓN
@@ -51,33 +51,25 @@ else:
     BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")) # Subimos dos niveles desde src/python/ hasta raiz/
 
 # Construir la ruta relativa a la imagen
-icon_path = os.path.join(BASE_DIR, "resources", "images", "NIT.png")
+icon_path = os.path.join(BASE_DIR, "resources", "images", "icon_logo.png")
 
 # Cargar la imagen
 icono = tk.PhotoImage(file=icon_path)
 pantalla.iconphoto(True, icono)
 
-# =========================
-# CARGAR IMAGEN DE FONDO
-# =========================
+# ======================
+# CARGAR IMAGEN LOGO
+# ======================
 
 # Cargar y redimensionar la imagen
-imagen_path = os.path.join(BASE_DIR, "resources", "images", "NIT.png")
+imagen_path = os.path.join(BASE_DIR, "resources", "images", "full_logo.png")
 imagen_original = Image.open(imagen_path) # Abrir la imagen con PIL
-imagen_redimensionada = imagen_original.resize((1550, 800))  # Ajustamos al tamaño deseado
-fondo = ImageTk.PhotoImage(imagen_redimensionada)  # Convertimos para Tkinter
+imagen_redimensionada = imagen_original.resize((700, 220))  # Ajustamos al tamaño deseado
+imagen_inferior = ImageTk.PhotoImage(imagen_redimensionada)  # Convertimos para Tkinter
 
 # Crear el Label con la imagen de fondo
-label_fondo = tk.Label(pantalla, image=fondo)
-label_fondo.place(x=0, y=0, relwidth=1, relheight=1)  # Ajusta la imagen a la ventana
-
-# =========================
-# CARGAR Y ANIMAR GIF
-# =========================
-label_animacion = tk.Label(pantalla)
-label_animacion.place(relwidth=1, relheight=1)  # El Label ocupa todo el espacio de la ventana
-ruta_del_gif = os.path.join(BASE_DIR, "resources", "videos", "giphy.gif") # Añadir ruta de la carpeta de recurso mediante os.path.join
-ani.cargar_y_animar_gif(label_animacion, ruta_del_gif, intervalo=100) # Ajusta el intervalo si es necesario
+label_imagen_inferior = tk.Label(pantalla, image=imagen_inferior, bg="black")
+label_imagen_inferior.place(x=50, y=750)  # Ajusta la imagen a la ventana
 
 # ====================================================
 # CREAR BOTONES ON-OFF PARA PINES DIGITALES FIJOS
@@ -89,28 +81,28 @@ header_frame1.place(x=30, y=30)
 # Agregar el título dentro del Frame
 titulo_leds = tk.Label(
     header_frame1, 
-    text="Fixed Pins", 
-    font=("Arial", 14, "bold", "underline"),  # Fuente negrita y subrayada
+    text="FIXED Pins", 
+    font=("Gill Sans MT Condensed", 18, "bold"),  # Fuente negrita y subrayada
     bg="black", 
     fg="white"
 )
-titulo_leds.place(x=35, y=10)
+titulo_leds.place(x=30, y=10)
 
-boton_d8 = tk.Button(pantalla, text="D8 - A0 ", font=("Arial", 12), bg="gray", width=12, 
+boton_d8 = tk.Button(pantalla, text="D8 - A0 ", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12,
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[0], boton_d8), pin_states.update({0: not pin_states[0]})])
 boton_d8.place(x=60, y=90)
 
-boton_d9 = tk.Button(pantalla, text="D9 - A1", font=("Arial", 12), bg="gray", width=12, 
+boton_d9 = tk.Button(pantalla, text="D9 - A1", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[1], boton_d9), pin_states.update({1: not pin_states[1]})])
-boton_d9.place(x=60, y=140)
+boton_d9.place(x=60, y=150)
 
-boton_d10 = tk.Button(pantalla, text="D10 - A2", font=("Arial", 12), bg="gray", width=12, 
+boton_d10 = tk.Button(pantalla, text="D10 - A2", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[2], boton_d10), pin_states.update({2: not pin_states[2]})])
-boton_d10.place(x=60, y=190)
+boton_d10.place(x=60, y=210)
 
-boton_d11 = tk.Button(pantalla, text="D11 - A3", font=("Arial", 12), bg="gray", width=12, 
+boton_d11 = tk.Button(pantalla, text="D11 - A3", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[3], boton_d11), pin_states.update({3: not pin_states[3]})])
-boton_d11.place(x=60, y=240)
+boton_d11.place(x=60, y=270)
 
 
 # ====================================================
@@ -118,24 +110,24 @@ boton_d11.place(x=60, y=240)
 # ====================================================
 
 # Crear un Frame negro en la parte superior
-header_frame2 = tk.Frame(pantalla, bg="black", width=175, height=270)
+header_frame2 = tk.Frame(pantalla, bg="black", width=175, height=180)
 header_frame2.place(x=235, y=30)
 
 # Agregar el título dentro del Frame
 titulo_rgb = tk.Label(
     header_frame2, 
     text="PWM Pins", 
-    font=("Arial", 14, "bold", "underline"),  # Fuente negrita y subrayada
+    font=("Gill Sans MT Condensed", 18, "bold"),  # Fuente negrita y subrayada
     bg="black", 
     fg="white"
 )
-titulo_rgb.place(x=40, y=10)
+titulo_rgb.place(x=35, y=10)
 
-boton_d3 = tk.Button(pantalla, text="D3 - A4 ", font=("Arial", 12), bg="gray", width=10, 
+boton_d3 = tk.Button(pantalla, text="D3 - A4 ", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [pp.on_off_button(pp.pwmDigitalPins[0], boton_d3), pin_states.update({4: not pin_states[4]})])
-boton_d3.place(x=270, y=80)
+boton_d3.place(x=270, y=90)
 
-boton_d5 = tk.Button(pantalla, text="D5 - A5 ", font=("Arial", 12), bg="gray", width=10, 
+boton_d5 = tk.Button(pantalla, text="D5 - A5 ", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [pp.on_off_button(pp.pwmDigitalPins[1], boton_d5), pin_states.update({5: not pin_states[5]})])
 boton_d5.place(x=270, y=150)
 
@@ -151,11 +143,11 @@ header_frame3.place(x=30, y=400)
 titulo_voltage = tk.Label(
     header_frame3, 
     text="V", 
-    font=("Arial", 14, "bold", "underline", "italic"),
+    font=("Gill Sans MT Condensed", 18, "bold", "italic"),
     bg="black", 
     fg="white"
 )
-titulo_voltage.place(x=80, y=10)
+titulo_voltage.place(x=50, y=10)
 
 # Frame para mostrar la corriente
 header_frame4 = tk.Frame(pantalla, bg="black", width=175, height=300)
@@ -164,10 +156,10 @@ header_frame4.place(x=235, y=400)
 titulo_corriente = tk.Label(
     header_frame4, 
     text="I (mA)", 
-    font=("Arial", 14, "bold", "underline", "italic"),
+    font=("Gill Sans MT Condensed", 18, "bold", "italic"),
     bg="black", 
     fg="white")
-titulo_corriente.place(x=60, y=10)
+titulo_corriente.place(x=40, y=10)
 
 # Frame para mostrar la potencia
 header_frame5 = tk.Frame(pantalla, bg="black", width=175, height=300)
@@ -176,10 +168,10 @@ header_frame5.place(x=440, y=400)
 titulo_corriente = tk.Label(
     header_frame5, 
     text="P (mW)", 
-    font=("Arial", 14, "bold", "underline", "italic"),
+    font=("Gill Sans MT Condensed", 18, "bold", "italic"),
     bg="black", 
     fg="white")
-titulo_corriente.place(x=50, y=10)
+titulo_corriente.place(x=30, y=10)
 
 
 # Crear diccionarios de etiquetas para almacenar voltajes, corriente y potencia
@@ -200,24 +192,24 @@ def setup_labels():
 
     # Crear etiquetas para los pines A0-A3 (fijos)
     for i in range(4):  # A0 - A3
-        voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Arial", 12))
+        voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Gill Sans MT Condensed", 16), bg="black", fg="red2")
         voltage_labels[f"A{i}"].place(x=80, y=460 + (i * 35))  
 
-        intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Arial", 12))
+        intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Gill Sans MT Condensed", 16), bg="black", fg="DarkOrange1")
         intensity_labels[f"A{i}"].place(x=275, y=460 + (i * 35))  
 
-        power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Arial", 12))
+        power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Gill Sans MT Condensed", 16), bg="black", fg="purple1")
         power_labels[f"A{i}"].place(x=470, y=460 + (i * 35))
 
     # Crear etiquetas para los pines A4 y A5
     for i in [4, 5]:  # A4 - A5
-        pwm_voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Arial", 12))
+        pwm_voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Gill Sans MT Condensed", 16), bg="black", fg="red2")
         pwm_voltage_labels[f"A{i}"].place(x=80, y=600 + ((i-4) * 35))  
 
-        pwm_intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Arial", 12))
+        pwm_intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Gill Sans MT Condensed", 16), bg="black", fg="DarkOrange1")
         pwm_intensity_labels[f"A{i}"].place(x=275, y=600 + ((i-4) * 35))  
 
-        pwm_power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Arial", 12))
+        pwm_power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Gill Sans MT Condensed", 16), bg="black", fg="purple1")
         pwm_power_labels[f"A{i}"].place(x=470, y=600 + ((i-4) * 35))
 
 setup_labels()            # Llamar a la función para inicializar las etiquetas al inicio
@@ -240,8 +232,8 @@ for pin in [4, 5]:
 # FUNCIONES DE VERIFICACIÓN DE CONEXIÓN
 #=====================================================
 # Crear etiqueta para el estado de la conexión
-conexion_label = tk.Label(pantalla, text="Connecting...", font=("Arial", 12), bg="white")
-conexion_label.place(x=500, y=30)
+conexion_label = tk.Label(pantalla, text="Connecting...", font=("Gill Sans MT Condensed", 12), bg="white")
+conexion_label.place(x=650, y=30)
 
 conexion_activa = True              # Variable para verificar el estado de la conexión
 estado_conexion_anterior = False    # Inicializar a False
@@ -261,7 +253,7 @@ def verificar_conexion():
             # Si no se lanza ninguna excepción, la conexión es exitosa
             conexion_label.config(text="Connection established", fg="green")
             conexion_activa = True
-             # (MOSFET) Apagar leds establecer la conexión ****
+            # (MOSFET) Apagar leds establecer la conexión ****
             print("Conexión establecida. Apagando LEDs...")
             for pin in fp.fixedDigitalPins:
                 pw.board.digital_write(pin, 0)  # Asegurar apagado de pines digitales fijos
@@ -372,28 +364,41 @@ verificacion_periodica()  # Inicia la verificación periódica
 #
 # Crear un Frame negro en la parte superior
 label_input = tk.Frame(pantalla, bg="black", width=350, height=180)
-label_input.place(x=440, y=30)
+label_input.place(x=440, y=80)
 
-# Agregar el título dentro del Frame
-titulo_TemHum = tk.Label(
-    label_input, 
-    text="Introduzir a temperatura e a humidade", 
-    font=("Arial", 10, "bold", "underline"),  # Fuente negrita y subrayada
-    bg="black", 
-    fg="white"
-)
-titulo_TemHum.place(x=50, y=10)
+# =========================
+# CARGAR Y ANIMAR GIF
+# =========================
+
+# Crear el Label para la animación dentro del Frame
+label_animacion = tk.Label(label_input, bg="black", width=350, height=180)
+label_animacion.place(x=0, y=0)  # Dentro del Frame, sin desplazamiento
+
+
+# Cargar el GIF y animarlo
+ruta_del_gif = os.path.join(BASE_DIR, "resources", "videos", "gif_p.gif") # Añadir ruta de la carpeta de recurso mediante os.path.join
+ani.cargar_y_animar_gif(label_animacion, ruta_del_gif, intervalo=100, ancho=300, alto=180 ) # Ajusta el intervalo si es necesario
+
+# # Agregar el título dentro del Frame
+# titulo_TemHum = tk.Label(
+#     label_input, 
+#     text="Input Temperature and Humidity", 
+#     font=("Arial", 10, "bold", "underline"),  # Fuente negrita y subrayada
+#     bg=None,  # Color de fondo del Frame
+#     fg="white"
+# )
+# titulo_TemHum.place(x=50, y=10)
 
 # Campos de entrada para temperatura y humedad
-etiqueta_temperatura = tk.Label(label_input, text="Temperatura (°C):", bg="black", fg="white")
-etiqueta_temperatura.place(x=20, y=50)
-entrada_temperatura = tk.Entry(label_input)
-entrada_temperatura.place(x=150, y=50)
+etiqueta_temperatura = tk.Label(label_input, text="Temperature (°C):", bg="black", fg="white", font=("Gill Sans MT Condensed", 12))
+etiqueta_temperatura.place(x=30, y=10)
+entrada_temperatura = tk.Entry(label_input, bg="dark goldenrod", width=4)
+entrada_temperatura.place(x=30, y=40)
 
-etiqueta_humedad = tk.Label(label_input, text="Humidade (%):", bg="black", fg="white")
-etiqueta_humedad.place(x=20, y=90)
-entrada_humedad = tk.Entry(label_input)
-entrada_humedad.place(x=150, y=90)
+etiqueta_humedad = tk.Label(label_input, text="Humidity (%):", bg="black", fg="white", font=("Gill Sans MT Condensed", 12))
+etiqueta_humedad.place(x=30, y=70)
+entrada_humedad = tk.Entry(label_input, bg="dark goldenrod", width=4)
+entrada_humedad.place(x=30, y=100)
 
 lock = threading.Lock()
 
@@ -402,8 +407,8 @@ def obtener_valores():
     try:
         temperatura = float(entrada_temperatura.get())
         humedad = float(entrada_humedad.get())
-        assert 0 <= temperatura <= 55, "La temperatura debe estar entre 0 y 55 °C"
-        assert 0 <= humedad <= 100, "La humedad debe ser entre 0 y 100 %"
+        assert 0 <= temperatura <= 55, "Temperature must be between 0 and 55 °C"
+        assert 0 <= humedad <= 100, "Humidity must be between 0 and 100 %"
 
         with pw.lock:
             if not (15 <= temperatura <= 30 and 40 <= humedad <= 50):
@@ -415,16 +420,16 @@ def obtener_valores():
                 pw.parpadeando_humedad = False
                 pw.board.analog_write(pp.pwmDigitalPins[0], 0)
                 pw.board.analog_write(pp.pwmDigitalPins[1], 0)
-                boton_d3.config(bg="gray")
-                boton_d5.config(bg="gray")
+                boton_d3.config(bg="steel blue")
+                boton_d5.config(bg="steel blue")
                 print(f"Temperatura ingresada: {temperatura} °C, Humedad ingresada: {humedad} %")
     except AssertionError as e:
         messagebox.showerror("Error", str(e))
         pass
 
 # Botón para obtener los valores
-boton_obtener = tk.Button(label_input, text="Obtener Valores", command=obtener_valores)
-boton_obtener.place(x=150, y=130)
+boton_obtener = tk.Button(label_input, text="Get values", font=("Gill Sans MT Condensed", 14), width=12, bg="DarkGoldenrod4", fg="white", command=obtener_valores)
+boton_obtener.place(x=30, y=130)
 
 # Iniciar los hilos de parpadeo al inicio
 threading.Thread(target=pp.parpadear_led_temperatura, args=(pp.pwmDigitalPins[0], boton_d3, "red"), daemon=True).start()

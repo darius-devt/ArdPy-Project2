@@ -35,7 +35,7 @@ def on_off_button(pin, button, color_on="blue"):
         states[pin] = False
 
     if states[pin]:
-        button.config(bg="gray")
+        button.config(bg="steel blue")
         states[pin] = False
         board.analog_write(pin, 0)
     else:
@@ -55,12 +55,12 @@ def parpadear_led_temperatura(pin, boton, color):
                 boton.config(bg=color)
             else:
                 board.analog_write(pin, 0)
-                boton.config(bg="gray")
+                boton.config(bg="steel blue")
         if pw.parpadeando_temperatura:
             time.sleep(3)
             with pw.lock:
                 board.analog_write(pin, 0)
-                boton.config(bg="gray")
+                boton.config(bg="steel blue")
             time.sleep(2)
         else:
             time.sleep(0.1)
@@ -73,12 +73,12 @@ def parpadear_led_humedad(pin, boton, color):
                 boton.config(bg=color)
             else:
                 board.analog_write(pin, 0)
-                boton.config(bg="gray")
+                boton.config(bg="steel blue")
         if pw.parpadeando_humedad:
             time.sleep(3)
             with pw.lock:
                 board.analog_write(pin, 0)
-                boton.config(bg="gray")
+                boton.config(bg="steel blue")
             time.sleep(2)
         else:
             time.sleep(0.1)
