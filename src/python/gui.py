@@ -82,25 +82,25 @@ header_frame1.place(x=30, y=30)
 titulo_leds = tk.Label(
     header_frame1, 
     text="FIXED Pins", 
-    font=("Gill Sans MT Condensed", 18, "bold"),  # Fuente negrita y subrayada
+    font=("Bahnschrift Condensed", 18, "bold"),  # Fuente negrita y subrayada
     bg="black", 
     fg="white"
 )
 titulo_leds.place(x=30, y=10)
 
-boton_d8 = tk.Button(pantalla, text="D8 - A0 ", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12,
+boton_d8 = tk.Button(pantalla, text="D8 - A0 ", font=("Bahnschrift Condensed", 16), bg="steel blue", width=12,
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[0], boton_d8), pin_states.update({0: not pin_states[0]})])
 boton_d8.place(x=60, y=90)
 
-boton_d9 = tk.Button(pantalla, text="D9 - A1", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
+boton_d9 = tk.Button(pantalla, text="D9 - A1", font=("Bahnschrift Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[1], boton_d9), pin_states.update({1: not pin_states[1]})])
 boton_d9.place(x=60, y=150)
 
-boton_d10 = tk.Button(pantalla, text="D10 - A2", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
+boton_d10 = tk.Button(pantalla, text="D10 - A2", font=("Bahnschrift Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[2], boton_d10), pin_states.update({2: not pin_states[2]})])
 boton_d10.place(x=60, y=210)
 
-boton_d11 = tk.Button(pantalla, text="D11 - A3", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
+boton_d11 = tk.Button(pantalla, text="D11 - A3", font=("Bahnschrift Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [fp.on_off_button(fp.fixedDigitalPins[3], boton_d11), pin_states.update({3: not pin_states[3]})])
 boton_d11.place(x=60, y=270)
 
@@ -117,17 +117,17 @@ header_frame2.place(x=235, y=30)
 titulo_rgb = tk.Label(
     header_frame2, 
     text="PWM Pins", 
-    font=("Gill Sans MT Condensed", 18, "bold"),  # Fuente negrita y subrayada
+    font=("Bahnschrift Condensed", 18, "bold"),  # Fuente negrita y subrayada
     bg="black", 
     fg="white"
 )
 titulo_rgb.place(x=35, y=10)
 
-boton_d3 = tk.Button(pantalla, text="D3 - A4 ", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
+boton_d3 = tk.Button(pantalla, text="D3 - A4 ", font=("Bahnschrift Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [pp.on_off_button(pp.pwmDigitalPins[0], boton_d3), pin_states.update({4: not pin_states[4]})])
 boton_d3.place(x=270, y=90)
 
-boton_d5 = tk.Button(pantalla, text="D5 - A5 ", font=("Gill Sans MT Condensed", 16), bg="steel blue", width=12, 
+boton_d5 = tk.Button(pantalla, text="D5 - A5 ", font=("Bahnschrift Condensed", 16), bg="steel blue", width=12, 
                     command=lambda: [pp.on_off_button(pp.pwmDigitalPins[1], boton_d5), pin_states.update({5: not pin_states[5]})])
 boton_d5.place(x=270, y=150)
 
@@ -143,7 +143,7 @@ header_frame3.place(x=30, y=400)
 titulo_voltage = tk.Label(
     header_frame3, 
     text="V", 
-    font=("Gill Sans MT Condensed", 18, "bold", "italic"),
+    font=("Bahnschrift Condensed", 18, "bold", "italic"),
     bg="black", 
     fg="white"
 )
@@ -156,7 +156,7 @@ header_frame4.place(x=235, y=400)
 titulo_corriente = tk.Label(
     header_frame4, 
     text="I (mA)", 
-    font=("Gill Sans MT Condensed", 18, "bold", "italic"),
+    font=("Bahnschrift Condensed", 18, "bold", "italic"),
     bg="black", 
     fg="white")
 titulo_corriente.place(x=40, y=10)
@@ -168,7 +168,7 @@ header_frame5.place(x=440, y=400)
 titulo_corriente = tk.Label(
     header_frame5, 
     text="P (mW)", 
-    font=("Gill Sans MT Condensed", 18, "bold", "italic"),
+    font=("Bahnschrift Condensed", 18, "bold", "italic"),
     bg="black", 
     fg="white")
 titulo_corriente.place(x=30, y=10)
@@ -192,24 +192,24 @@ def setup_labels():
 
     # Crear etiquetas para los pines A0-A3 (fijos)
     for i in range(4):  # A0 - A3
-        voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Gill Sans MT Condensed", 16), bg="black", fg="red2")
+        voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Bahnschrift Condensed", 16), bg="black", fg="red2")
         voltage_labels[f"A{i}"].place(x=80, y=460 + (i * 35))  
 
-        intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Gill Sans MT Condensed", 16), bg="black", fg="DarkOrange1")
+        intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Bahnschrift Condensed", 16), bg="black", fg="DarkOrange1")
         intensity_labels[f"A{i}"].place(x=275, y=460 + (i * 35))  
 
-        power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Gill Sans MT Condensed", 16), bg="black", fg="purple1")
+        power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Bahnschrift Condensed", 16), bg="black", fg="purple1")
         power_labels[f"A{i}"].place(x=470, y=460 + (i * 35))
 
     # Crear etiquetas para los pines A4 y A5
     for i in [4, 5]:  # A4 - A5
-        pwm_voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Gill Sans MT Condensed", 16), bg="black", fg="red2")
+        pwm_voltage_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- V", font=("Bahnschrift Condensed", 16), bg="black", fg="red2")
         pwm_voltage_labels[f"A{i}"].place(x=80, y=600 + ((i-4) * 35))  
 
-        pwm_intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Gill Sans MT Condensed", 16), bg="black", fg="DarkOrange1")
+        pwm_intensity_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mA", font=("Bahnschrift Condensed", 16), bg="black", fg="DarkOrange1")
         pwm_intensity_labels[f"A{i}"].place(x=275, y=600 + ((i-4) * 35))  
 
-        pwm_power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Gill Sans MT Condensed", 16), bg="black", fg="purple1")
+        pwm_power_labels[f"A{i}"] = tk.Label(pantalla, text=f"A{i}: --- mW", font=("Bahnschrift Condensed", 16), bg="black", fg="purple1")
         pwm_power_labels[f"A{i}"].place(x=470, y=600 + ((i-4) * 35))
 
 setup_labels()            # Llamar a la función para inicializar las etiquetas al inicio
@@ -232,7 +232,7 @@ for pin in [4, 5]:
 # FUNCIONES DE VERIFICACIÓN DE CONEXIÓN
 #=====================================================
 # Crear etiqueta para el estado de la conexión
-conexion_label = tk.Label(pantalla, text="Connecting...", font=("Gill Sans MT Condensed", 12), bg="white")
+conexion_label = tk.Label(pantalla, text="Connecting...", font=("Bahnschrift Condensed", 12), bg="white")
 conexion_label.place(x=650, y=30)
 
 conexion_activa = True              # Variable para verificar el estado de la conexión
@@ -390,12 +390,12 @@ ani.cargar_y_animar_gif(label_animacion, ruta_del_gif, intervalo=100, ancho=300,
 # titulo_TemHum.place(x=50, y=10)
 
 # Campos de entrada para temperatura y humedad
-etiqueta_temperatura = tk.Label(label_input, text="Temperature (°C):", bg="black", fg="white", font=("Gill Sans MT Condensed", 12))
+etiqueta_temperatura = tk.Label(label_input, text="Temperature (°C):", bg="black", fg="white", font=("Bahnschrift Condensed", 12))
 etiqueta_temperatura.place(x=30, y=10)
 entrada_temperatura = tk.Entry(label_input, bg="dark goldenrod", width=4)
 entrada_temperatura.place(x=30, y=40)
 
-etiqueta_humedad = tk.Label(label_input, text="Humidity (%):", bg="black", fg="white", font=("Gill Sans MT Condensed", 12))
+etiqueta_humedad = tk.Label(label_input, text="Humidity (%):", bg="black", fg="white", font=("Bahnschrift Condensed", 12))
 etiqueta_humedad.place(x=30, y=70)
 entrada_humedad = tk.Entry(label_input, bg="dark goldenrod", width=4)
 entrada_humedad.place(x=30, y=100)
@@ -428,7 +428,7 @@ def obtener_valores():
         pass
 
 # Botón para obtener los valores
-boton_obtener = tk.Button(label_input, text="Get values", font=("Gill Sans MT Condensed", 14), width=12, bg="DarkGoldenrod4", fg="white", command=obtener_valores)
+boton_obtener = tk.Button(label_input, text="Get values", font=("Bahnschrift Condensed", 14), width=12, bg="DarkGoldenrod4", fg="white", command=obtener_valores)
 boton_obtener.place(x=30, y=130)
 
 # Iniciar los hilos de parpadeo al inicio
