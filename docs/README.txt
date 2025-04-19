@@ -1,38 +1,28 @@
-my_project/
-│
-├── config/              # Configuraciones y archivos de entorno
-│   └── settings.py      # Configuración general del proyecto
-│   └── config.json      # Archivos JSON de configuración, si es necesario
-│   └── .env             # Variables de entorno (para datos sensibles)
-│
-├── data/                # Datos generados o utilizados por el proyecto
-│   └── data.csv         # Ejemplo de un archivo de datos (como CSV)
-│   └── logs/            # Archivos de log del proyecto
-│
-├── docs/                # Documentación del proyecto
-│   ├── README.md        # Archivo principal de documentación
-│   └── architecture.md  # Explicación de la arquitectura general del proyecto
-│
-├── resources/           # Archivos adicionales como imágenes, gráficos, etc.
-│   └── images/          # Imágenes relacionadas con el proyecto (por ejemplo, iconos o diagramas)
-│   └── diagrams/        # Diagramas de flujo o esquemas
-│
-├── src/                 # Código fuente del proyecto
-│   ├── arduino/         # Código específico de Arduino
-│   │   └── main.ino     # Sketch de Arduino (archivo .ino)
-│   │   └── sensors.ino  # Otro código de Arduino relacionado con sensores, si es necesario
-│   │   └── utilities.ino # Librerías o funciones auxiliares para Arduino
-│   │
-│   ├── python/             # Código Python
-│   │   ├── controlLeds.py  # Configuración control de leds
-│   │   ├── gui.py          # Interfaz gráfica si usas Tkinter o cualquier otro framework
-│   │   ├── main.py      	# Archivo principal de Python para ejecutar el proyecto (incluye comunicación con Arduino)
-│   │   └── power.py        # Configuración de lectura de voltaje, corriente y potencia eléctrica en el circuito
-│   │   ├── sensors.py      # Código para leer o procesar datos de sensores
-│
-├── tests/               # Pruebas y tests
-│   ├── test_arduino.py  # Tests para el código de Arduino (si utilizas un simulador)
-│   └── test_python.py   # Tests para el código Python
-│
-├── .gitignore           # Archivos y carpetas que no deben ser seguidos por Git
-└── requirements.txt     # Dependencias de Python necesarias para el proyecto
+# ArdPy-Project2
+
+## 🧩 Description
+
+**ArdPy-Project2** is a Python-based application designed to control and interact with physical components connected to an Arduino board.  
+The main goal is to provide a simple and intuitive graphical interface for users to monitor and manage hardware components such as LEDs, sensors or actuators without having to deal with complex code.
+
+The interface displays relevant information in real-time, making it easy to understand the system’s behavior at a glance.  
+The user experience is designed to be as seamless as possible, reducing the steps needed to access.
+
+---
+## 🕘 Initial Version
+
+### 📌 ArdPy_1.0
+
+The project originally began with a preliminary setup hosted in a separate repository, which can be found at:  
+🔗 [https://github.com/monicodes-hub/ArdPy_1.0](https://github.com/monicodes-hub/ArdPy_1.0)
+
+That repository includes the **initial version `v1.1.0`**, where the first Arduino–Python tests and configurations were implemented.
+---
+### 🧪 Version `v1.1.0`: Basic LED and RGB LED Control
+
+This version focused on controlling multiple LEDs and an RGB LED connected to an Arduino board using Python.  
+The libraries and tools used were:
+
+- `StandardFirmata` uploaded to the Arduino via the **Arduino IDE**
+- `pyfirmata2` for communication from **Python`
+---
