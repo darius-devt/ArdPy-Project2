@@ -17,7 +17,7 @@ The project originally began with a preliminary setup hosted in a separate repos
 🔗 [https://github.com/monicodes-hub/ArdPy_1.0](https://github.com/monicodes-hub/ArdPy_1.0)
 
 That repository includes the **initial version `v1.1.0`**, where the first Arduino–Python tests and configurations were implemented.
----
+
 ### 🧪 Version `v1.1.0`: Basic LED and RGB LED Control
 
 This version focused on controlling multiple LEDs and an RGB LED connected to an Arduino board using Python.  
