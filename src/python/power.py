@@ -10,7 +10,7 @@ from arduino_board import board
 # MEDIR CORRIENTE FIXED_PORTS (V,I,R,P)
 # =========================================
 
-vcc = 5.0  # Voltaje de alimentación
+vcc = 60.0 # Voltaje de alimentación
 resistencia = 220
 
 # Diccionarios para almacenar los voltajes y las etiquetas de corriente
